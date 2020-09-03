@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_1_9_2020/apiservices/apiservices.dart';
+import 'package:project_1_9_2020/models/siswa.dart';
 
 class AddSiswa extends StatefulWidget {
   @override
@@ -6,6 +8,18 @@ class AddSiswa extends StatefulWidget {
 }
 
 class _AddSiswaState extends State<AddSiswa> {
+  TextEditingController controllerNama = TextEditingController();
+  TextEditingController controllerAlamat = TextEditingController();
+  TextEditingController controllerT_lahir = TextEditingController();
+  TextEditingController controllerJl = TextEditingController();
+  String pesan = 'kosong';
+  ApiServices apiServices;
+  @override
+  void initState() {
+    apiServices = ApiServices();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,24 +29,55 @@ class _AddSiswaState extends State<AddSiswa> {
       body: Card(
         child: Container(
           padding: EdgeInsets.all(15),
-          child: Column(
+          child: ListView(
             children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Nama'),
+              FormSiswa(
+                controller: controllerNama,
+                label: 'Nama',
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Alamat'),
+              FormSiswa(
+                controller: controllerAlamat,
+                label: 'Alamat',
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Tanggal lahir'),
+              FormSiswa(
+                controller: controllerT_lahir,
+                label: 'Tanggal lahir',
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Jenis kelamin'),
+              FormSiswa(
+                controller: controllerJl,
+                label: 'Jenis kelamin',
               ),
+              IconButton(
+                  icon: Icon(Icons.file_upload),
+                  onPressed: () {
+                    apiServices
+                        .postData(Siswa(
+                            nama: controllerNama.text,
+                            alamat: controllerAlamat.text,
+                            t_lahir: controllerT_lahir.text,
+                            jl: controllerJl.text))
+                        .then((value) => setState(() {
+                              pesan = value;
+                            }));
+                  }),
+              Text(pesan)
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class FormSiswa extends StatelessWidget {
+  TextEditingController controller;
+  String label;
+  FormSiswa({this.controller, this.label});
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(labelText: label),
     );
   }
 }

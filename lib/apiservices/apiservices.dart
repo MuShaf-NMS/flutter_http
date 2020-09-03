@@ -6,10 +6,21 @@ class ApiServices {
   static const url = 'https://api-v2.pondokdiya.id';
   Future<List<Siswa>> getData() async {
     final response = await http.get("$url/siswa");
+    print(response.body);
     if (response.statusCode == 200) {
       return getAll(response.body);
     } else {
       throw Exception('Oops');
+    }
+  }
+
+  Future<String> postData(Siswa data) async {
+    print(encode(data));
+    final response = await http.post('$url/add-siswa', body: encode(data));
+    if (response.statusCode == 200) {
+      return 'Succes';
+    } else {
+      return 'Gagal';
     }
   }
 }
