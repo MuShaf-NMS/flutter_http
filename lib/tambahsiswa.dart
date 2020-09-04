@@ -50,15 +50,15 @@ class _AddSiswaState extends State<AddSiswa> {
               IconButton(
                   icon: Icon(Icons.file_upload),
                   onPressed: () {
-                    apiServices
-                        .postData(Siswa(
-                            nama: controllerNama.text,
-                            alamat: controllerAlamat.text,
-                            t_lahir: controllerT_lahir.text,
-                            jl: controllerJl.text))
-                        .then((value) => setState(() {
-                              pesan = value;
-                            }));
+                    Siswa siswa = Siswa(
+                        nama: controllerNama.text,
+                        alamat: controllerAlamat.text,
+                        t_lahir: controllerT_lahir.text,
+                        jl: controllerJl.text);
+                    apiServices.postData(siswa).then((value) => setState(() {
+                          pesan = value;
+                          Navigator.pop(context);
+                        }));
                   }),
               Text(pesan)
             ],

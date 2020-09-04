@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_1_9_2020/apiservices/apiservices.dart';
+import 'package:project_1_9_2020/editsiswa.dart';
 import 'package:project_1_9_2020/models/siswa.dart';
 import 'package:project_1_9_2020/tambahsiswa.dart';
 
@@ -9,7 +10,8 @@ void main() {
     debugShowCheckedModeBanner: false,
     routes: <String, WidgetBuilder>{
       '/awal': (BuildContext context) => Project(),
-      '/tambah': (BuildContext context) => AddSiswa()
+      '/tambah': (BuildContext context) => AddSiswa(),
+      '/edit': (BuildContext context) => EditSiswa()
     },
   ));
 }
@@ -50,39 +52,16 @@ class _ProjectState extends State<Project> {
             builder:
                 (BuildContext context, AsyncSnapshot<List<Siswa>> snapshot) {
               if (snapshot.hasData) {
-                return ListView(
-                  children: <Widget>[
-                    Tampil(
-                        snapshot.data[0].id.toString(),
-                        snapshot.data[0].nama,
-                        snapshot.data[0].alamat,
-                        snapshot.data[0].t_lahir,
-                        snapshot.data[0].jl),
-                    Tampil(
-                        snapshot.data[1].id.toString(),
-                        snapshot.data[1].nama,
-                        snapshot.data[1].alamat,
-                        snapshot.data[1].t_lahir,
-                        snapshot.data[1].jl),
-                    Tampil(
-                        snapshot.data[2].id.toString(),
-                        snapshot.data[2].nama,
-                        snapshot.data[2].alamat,
-                        snapshot.data[2].t_lahir,
-                        snapshot.data[2].jl),
-                    Tampil(
-                        snapshot.data[3].id.toString(),
-                        snapshot.data[3].nama,
-                        snapshot.data[3].alamat,
-                        snapshot.data[3].t_lahir,
-                        snapshot.data[3].jl),
-                    Tampil(
-                        snapshot.data[4].id.toString(),
-                        snapshot.data[4].nama,
-                        snapshot.data[4].alamat,
-                        snapshot.data[4].t_lahir,
-                        snapshot.data[4].jl),
-                  ],
+                return ListView.builder(
+                  itemBuilder: (context, i) {
+                    return Tampil(
+                        snapshot.data[i].id.toString(),
+                        snapshot.data[i].nama,
+                        snapshot.data[i].alamat,
+                        snapshot.data[i].t_lahir,
+                        snapshot.data[i].jl);
+                  },
+                  itemCount: snapshot.data.length,
                 );
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
@@ -169,7 +148,12 @@ class Tampil extends StatelessWidget {
                   style: TextStyle(fontSize: size),
                 )
               ],
-            )
+            ),
+            RaisedButton(
+                child: Text('Edit'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/edit');
+                })
           ],
         ),
       ),

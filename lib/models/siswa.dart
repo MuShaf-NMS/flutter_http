@@ -18,18 +18,21 @@ class Siswa {
         jl: json['jl']);
   }
 
-  String toJson() {
-    Map<String, dynamic> siswa = {
-      'nama': nama,
-      'alamat': alamat,
-      't_lahir': t_lahir,
-      'jl': jl
-    };
-    return json.encode(siswa);
+  Map<String, dynamic> toJson() {
+    return {'nama': nama, 'alamat': alamat, 't_lahir': t_lahir, 'jl': jl};
   }
 }
 
 List<Siswa> getAll(String jsonData) {
   final data = json.decode(jsonData);
   return List<Siswa>.from(data.map((item) => Siswa.fromJson(item)));
+}
+
+Siswa getOne(String jsonData) {
+  return Siswa.fromJson(json.decode(jsonData));
+}
+
+String dataToJson(Siswa data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
 }
