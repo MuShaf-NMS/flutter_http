@@ -15,8 +15,10 @@ class ApiServices {
   }
 
   Future<String> postData(Siswa data) async {
-    print(encode(data));
-    final response = await http.post('$url/add-siswa', body: encode(data));
+    print(data);
+    print(data.toJson());
+    final response = await http.post('$url/add-siswa', body: data.toJson());
+    print(response.statusCode);
     if (response.statusCode == 200) {
       return 'Succes';
     } else {
