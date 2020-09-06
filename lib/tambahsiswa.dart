@@ -57,7 +57,7 @@ class _AddSiswaState extends State<AddSiswa> {
                         jl: controllerJl.text);
                     apiServices.postData(siswa).then((value) => setState(() {
                           pesan = value;
-                          Navigator.pop(context);
+                          Navigator.pop(context, true);
                         }));
                   }),
               Text(pesan)

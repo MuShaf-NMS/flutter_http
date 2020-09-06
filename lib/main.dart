@@ -149,11 +149,16 @@ class Tampil extends StatelessWidget {
                 )
               ],
             ),
-            RaisedButton(
-                child: Text('Edit'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/edit');
-                })
+            Row(
+              children: [
+                RaisedButton(
+                    child: Text('Edit'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/edit');
+                    }),
+                RaisedButton(child: Text('Hapus'), onPressed: () {})
+              ],
+            )
           ],
         ),
       ),

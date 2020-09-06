@@ -48,4 +48,14 @@ class ApiServices {
       return 'Gagal';
     }
   }
+
+  Future<String> delete(int id) async {
+    final resposne = await http.delete('$url/delete-siswa/$id',
+        headers: {"content-type": "application/json"});
+    if (resposne.statusCode == 200) {
+      return 'Succes';
+    } else {
+      return 'Gagal';
+    }
+  }
 }
